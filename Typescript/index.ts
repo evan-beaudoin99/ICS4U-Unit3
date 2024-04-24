@@ -11,15 +11,17 @@ function reverseString(string_to_reverse: string): string {
     if (string_to_reverse === "") {
         return "";
     } else {
-        return reverseString(string_to_reverse.substr(1)) + str.charAt(0);
+        let first_character_of_string: string = string_to_reverse.charAt(0)
+        let rest_of_string: string = string_to_reverse.substring(1)
+
+        return reverseString(rest_of_string) + first_character_of_string
     }
 }
 
-// Test the function`
+// Test the function
+let word: string = "recursion";
+let reversedString: string = reverseString(word);
 
-let str: string = "Hello, World!";
-let reversedStr: string = reverseString(str);
-
-console.log(`Original String: ${str}`);
-console.log(`Reversed String: ${reversedStr}`);
+console.log(`Original String: ${word}`);
+console.log(`Reversed String: ${reversedString}`);
 
