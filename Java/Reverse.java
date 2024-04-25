@@ -26,18 +26,18 @@ final class Reverse {
     /**
     * This function reverses a string.
     *
-    * @param stringToReverse.
-    * @return returnValue
+    * @param stringToReverse the string that will be reversed.
+    * @return the reversed string.
     */
     public static String reverseString(String stringToReverse) {
-        public String returnValue;
+        final String returnValue;
         if (stringToReverse.isEmpty()) {
             returnValue = "";
         } else {
             final char firstCharacterOfString = stringToReverse.charAt(0);
             final String restOfString = stringToReverse.substring(1);
-            returnValue = reverseString(restOfString) 
-              + firstCharacterOfString;
+            returnValue = reverseString(restOfString)
+                + firstCharacterOfString;
         }
         return returnValue;
     }
