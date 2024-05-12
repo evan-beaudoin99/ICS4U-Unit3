@@ -16,7 +16,8 @@ import java.util.List;
 final class Main {
   /**
   * Letters i and j are variables representing the row and column of the square, 
-  * similarly how in R^2 planes they presentent the x and y-axis respectively. 
+  * similarly how in R^2 planes they presentent the x and y-axis respectively. This info
+  * comes from MCV4U course, and explains the representation of these single letter variables.
   * In this program I also used matrices to represent the squares as they are much more efficient.
   */
   
