@@ -1,131 +1,163 @@
-/*
-* This program prints out
-* the Magic Sqaures.
+/**
+* This is the Magic Square program
 *
 * @author  Evan Beaudoin
 * @version 1.0
-* @since   2024-05-07
-*/
+* @since   2024-05-12
+*/ 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * A program to generate unique magic squares of size 3x3.
+ */
 final class Main {
-    private Main() {
-        // Prevent instantiation
-        // Optional: throw an exception e.g. AssertionError
-        // if this ever *is* called
-        throw new IllegalStateException("Cannot be instantiated");
-    }
+  /**
+  * Letters i and j are variables representing the row and column of the square, 
+  * similarly how in R^2 planes they presentent the x and y-axis respectively. 
+  * In this program I also used matrices to represent the squares as they are much more efficient.
+  */
+  
+    private static final int SIZE = 3; // Size of the magic square (3x3)
+    private static final int MAGIC_CONSTANT = 15; // Sum of numbers from 1 to 9 for 3x3 matrix
 
-    /** The top left index. */
-    public static final int ZERO = 0;
-    /** The top middle index. */
-    public static final int ONE = 1;
-    /** The top right index. */
-    public static final int TWO = 2;
-    /** The middle left index. */
-    public static final int THREE = 3;
-    /** The center index. */
-    public static final int FOUR = 4;
-    /** The middle right index. */
-    public static final int FIVE = 5;
-    /** The lower left index. */
-    public static final int SIX = 6;
-    /** The lower center index. */
-    public static final int SEVEN = 7;
-    /** The lower right index. */
-    public static final int EIGHT = 8;
-    /** The maximum number for magicNumbers. */
-    public static final int NINE = 9;
-    /** The maximum number for magicNumbers. */
-    public static final int MAGICNUM = 15;
+  /**
+  * Prevent instantiation.
+  * Throw an exception IllegalStateException.
+  * if this is ever called
+  *
+  * @throws IllegalStateException if this is ever called
+  *
+  */
+  private Main() {
+      throw new IllegalStateException("Cannot be instantiated");
+  }
+
 
     /**
-    * Process numbers.
-    */
-    private static int numberOfProcess = 0;
-    private static int numberOfMagicSquares = 0;
+     * Generates a random magic square of size 3x3.
+     *
+     * @return A 2D array representing the generated magic square.
+     */
+    private static int[][] generateMagicSquare() {
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 1; i <= SIZE * SIZE; i++) {
+            numbers.add(i);
+        }
+        Collections.shuffle(numbers); //Built-in function that shuffles the numbers 1-9
 
-    public static void genSquare2(final int[] square, final int index) {
-        // generate the magic sqaure
-        for (int counter = 1; counter < 9; counter++) {
-            numberOfProcess++;
-            square[index] = counter;
-
-            // only fill in spots that have not yet been filled in
-            if (index < 8) {
-                genSquare2(square, index + 1);
-            } else if (isMagic(square) == true) {
-                // if all done and it is magic, then print it out
-                printMagicSquare(square);
-                numberOfMagicSquares++;
+        int[][] square = new int[SIZE][SIZE];
+        int index = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                square[i][j] = numbers.get(index++); // Add the numbers to the square
             }
         }
+        return square;
     }
 
-    public static void genSquare(final int[] square, final int[] currentSquare,
-                                 final int index) {
-        // generate the magic sqaure
-        for (int counter = 0; counter < square.length; counter++) {
-            numberOfProcess++;
-            if (currentSquare[counter] == 0) {
-                // incriment to the next step
-                square[index] = counter + 1;
-                currentSquare[counter] = 1;
+    /**
+     * Checks if the given 2D array represents a magic square.
+     *
+     * @param square The 2D array to check.
+     * @return True if the given array is a magic square, false otherwise.
+     */
+    private static boolean isMagicSquare(int[][] square) {
+        // Check rows and columns sums
+        for (int i = 0; i < SIZE; i++) {
+            int rowSum = 0;
+            int columnSum = 0;
+            for (int j = 0; j < SIZE; j++) {
+                rowSum += square[i][j];
+                columnSum += square[j][i];
+            }
+            if (rowSum != MAGIC_CONSTANT || columnSum != MAGIC_CONSTANT) {
+                return false;
+            }
+        }
 
-                // only fill in spots that have not yet been filled in
-                if (index < square.length - 1) {
-                    genSquare(square, currentSquare, index + 1);
-                } else if (isMagic(square) == true) {
-                    // if all done and it is magic, then print it out
-                    printMagicSquare(square);
-                    numberOfMagicSquares++;
+        // Check diagonal sums
+        int diagonal1Sum = 0;
+        int diagonal2Sum = 0;
+        for (int i = 0; i < SIZE; i++) {
+            diagonal1Sum += square[i][i];
+            diagonal2Sum += square[i][SIZE - 1 - i];
+        }
+        return diagonal1Sum == MAGIC_CONSTANT && diagonal2Sum == MAGIC_CONSTANT;
+    }
+
+    /**
+     * Checks if the list of generated magic squares contains the given magic square.
+     *
+     * @param squares The list of generated magic squares.
+     * @param square  The magic square to check.
+     * @return True if the list contains the given magic square, false otherwise.
+     */
+    private static boolean containsMagicSquare(List<int[][]> squares, int[][] square) {
+        for (int[][] testSquare : squares) {
+            if (areSquaresEqual(testSquare, square)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if two magic squares are equal.
+     *
+     * @param square1 The first magic square.
+     * @param square2 The second magic square.
+     * @return True if the two squares are equal, false otherwise.
+     */
+    private static boolean areSquaresEqual(int[][] square1, int[][] square2) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (square1[i][j] != square2[i][j]) {
+                    return false;
                 }
-                currentSquare[counter] = 0;
             }
         }
+        return true;
     }
 
-    public static boolean isMagic(final int[] preSquare) {
-        // returns true or false for whether or not array is a magic square
-        // this assumes there are no repeats, but that check could be added!
-        int row1 = preSquare[ZERO] + preSquare[ONE] + preSquare[TWO];
-        int row2 = preSquare[THREE] + preSquare[FOUR] + preSquare[FIVE];
-        int row3 = preSquare[SIX] + preSquare[SEVEN] + preSquare[EIGHT];
-        int col1 = preSquare[ZERO] + preSquare[THREE] + preSquare[SIX];
-        int col2 = preSquare[ONE] + preSquare[FOUR] + preSquare[SEVEN];
-        int col3 = preSquare[TWO] + preSquare[FIVE] + preSquare[EIGHT];
-        int diag1 = preSquare[ZERO] + preSquare[FOUR] + preSquare[EIGHT];
-        int diag2 = preSquare[TWO] + preSquare[FOUR] + preSquare[SIX];
-
-        return row1 == MAGICNUM && row2 == MAGICNUM && row3 == MAGICNUM
-               && col1 == MAGICNUM && col2 == MAGICNUM
-               && col3 == MAGICNUM && diag1 == MAGICNUM && diag2 == MAGICNUM;
-    }
-
-    public static void printMagicSquare(final int[] outputSquare) {
-        // prints inputted array in a magic square format
-        System.out.println("\n*****");
-        for (int count = 0; count < outputSquare.length; count++) {
-            if (count == THREE || count == SIX) {
-                System.out.println();
-                System.out.print(outputSquare[count] + " ");
-            } else {
-                System.out.print(outputSquare[count] + " ");
+    /**
+     * Prints the given magic square along with its index.
+     *
+     * @param square The magic square to print.
+     * @param count  The index of the magic square.
+     */
+    private static void printMagicSquare(int[][] square, int count) {
+        System.out.println("Magic Square " + count + ":");
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                System.out.print(square[i][j] + " ");
             }
+            System.out.println();
         }
-        System.out.println("\n*****");
+        System.out.println();
     }
 
-    public static void main(final String[] args) {
-        // main stub, get user input here
-        int[] magicSquare = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-        int[] extraArray = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-        System.out.println("\n");
-        System.out.println("All Possible Magic Squares (3x3):\n");
-        //genSquare2(magicSquare, 0);
-        //genSquare(magicSquare, extraArray, 0);
+  /**
+   * Main method to generate and print unique magic squares.
+   *
+   * @param args The command line arguments (unused).
+   */
+  public static void main(String[] args) {
+      int magicSquareCount = 8; // Number of magic squares to generate
+      List<int[][]> generatedMagicSquares = new ArrayList<>();
 
-        System.out.println("Number of processes: " + numberOfProcess);
-        System.out.println("Number of Magic Squares: " + numberOfMagicSquares);
-        System.out.println("\nDone.");
-    }
+      // Loop to generate magic squares
+      for (int count = 0; count < magicSquareCount; count++) {
+          while (true) {
+              int[][] square = generateMagicSquare();
+              if (isMagicSquare(square) && !containsMagicSquare(generatedMagicSquares, square)) {
+                  printMagicSquare(square, count + 1);
+                  generatedMagicSquares.add(square);
+                  break;
+              }
+          }
+      }
+  }
 }
