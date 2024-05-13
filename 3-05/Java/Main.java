@@ -1,5 +1,6 @@
 /**
-* This is the Magic Square program
+* The HelloWorld program implements an application that
+* simply displays "Hello World!" to the standard output.
 *
 * @author  Evan Beaudoin
 * @version 1.0
@@ -16,8 +17,7 @@ import java.util.List;
 final class Main {
   /**
   * Letters i and j are variables representing the row and column of the square, 
-  * similarly how in R^2 planes they presentent the x and y-axis respectively. This info
-  * comes from MCV4U course, and explains the representation of these single letter variables.
+  * similarly how in R^2 planes they presentent the x and y-axis respectively. 
   * In this program I also used matrices to represent the squares as they are much more efficient.
   */
   
@@ -162,3 +162,4 @@ final class Main {
       }
   }
 }
+
