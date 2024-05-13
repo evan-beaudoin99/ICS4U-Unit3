@@ -11,8 +11,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Arrays;
 
-final class BinarySearch {
-  private BinarySearch() {
+final class Main {
+  private Main() {
     // Prevent instantiation
     // Optional: throw an exception e.g. AssertionError
     // if this ever *is* called
