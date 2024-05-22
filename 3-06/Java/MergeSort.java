@@ -1,9 +1,17 @@
+/**
+* This uses the merge sort algorithm to sort a list of numbers.
+*
+* @author  Evan Beaudoin
+* @version 1.0
+* @since   2024-05-22
+*/ 
+
 import java.util.Arrays;
 
 /**
  * A class that implements the merge sort algorithm.
  */
-public class MergeSort {
+final class MergeSort {
 
     /**
      * Sorts the input array using the merge sort algorithm.
@@ -69,9 +77,9 @@ public class MergeSort {
         int[] sortedArray3 = mergeSort(testArray3);
 
         // Outputting the results
-        System.out.println("Sorted Array 1: " + Arrays.toString(sortedArray1)); // Output: [5, 7, 23, 32, 34, 62]
-        System.out.println("Sorted Array 2: " + Arrays.toString(sortedArray2)); // Output: [-5, -1, 0, 2, 4, 5, 6, 10]
-        System.out.println("Sorted Array 3: " + Arrays.toString(sortedArray3)); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        System.out.println("Sorted Array 1: " + Arrays.toString(sortedArray1));
+        System.out.println("Sorted Array 2: " + Arrays.toString(sortedArray2));
+        System.out.println("Sorted Array 3: " + Arrays.toString(sortedArray3));
     }
 }
 
