@@ -6,7 +6,6 @@
 * @version 1.0
 * @since   2024-05-13
 */
-
 import java.util.Scanner;
 
 final class Main {
@@ -19,17 +18,16 @@ final class Main {
 
 
     static void hanoi(final int numberOfDisks, final int startPeg,
-                             final int endPeg) {
+                            final int endPeg) {
         // This function calculates where the disks should be placed in
-        final int pegNumber = 6;
+    
         if (numberOfDisks == 1) {
             System.out.println("Move disk 1 from peg " + startPeg + " to peg "
-                               + endPeg);
+                            + endPeg);
         } else {
             hanoi(numberOfDisks - 1, startPeg, 6 - startPeg - endPeg);
             System.out.println("Move disk " + numberOfDisks + " from peg " + startPeg + " to " + endPeg);
             hanoi(numberOfDisks -1, 6 - startPeg - endPeg, endPeg);
-            assert true;
         }
     }
 
